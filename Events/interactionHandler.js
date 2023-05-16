@@ -11,14 +11,14 @@ module.exports = {
         if (interaction.isChatInputCommand()) {
             const command = client.commands.get(commandName);
 
-            if (command.PermissionGroup = 'Headquarters') {
-                if (!member.roles.cache.has("1060352770546348084") && !member.roles.cache.has("1060352768491143179")) {
+            if (command.PermissionGroup = 'Moderation') {
+                if (!member.roles.cache.has("1100622738755964959") && !member.roles.cache.has("968897239642677318")) {
                     return interaction.reply({ embeds: [insufficientPermissions] })
                 }
             }
 
-            if (command.PermissionGroup = 'ArmyCommand') {
-                if (!member.roles.cache.has("1060352768491143179") && member.user.id != "820458779044347954") {
+            if (command.PermissionGroup = 'Administration') {
+                if (!member.roles.cache.has("1077756760779128893")) {
                     return interaction.reply({ embeds: [insufficientPermissions] })
                 }
             }

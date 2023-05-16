@@ -12,9 +12,9 @@ module.exports = function loadCommands(client) {
             const commandFile = require(`../Commands/${folder}/${file}`);
 
             const properties = { folder, ...commandFile };
-            client.commands.set(commandFile.data.name, properties);
+            client.commands.set(commandFile.Data.name, properties);
 
-            commandsArray.push(commandFile.data.toJSON());
+            commandsArray.push(commandFile.Data.toJSON());
 
             continue;
         }

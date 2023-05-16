@@ -1,5 +1,5 @@
 {
-  "name": "british-army",
+  "name": "ultrax-industries",
   "version": "1.0.0",
   "description": "ElusiveLunic's BA Discord Bot",
   "main": "index.js",
@@ -12,6 +12,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "discord.js": "^14.11.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "mongoose": "^7.1.1"
   }
 }

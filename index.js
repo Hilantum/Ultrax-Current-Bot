@@ -28,5 +28,3 @@ process.on('unhandledExcection', (reason, promise) => {
     console.log(chalk.redBright.bold('HANDLED ERROR | ') + 'Unhandled exception successfully handled');
     console.log(reason)
 });
-
-
