@@ -6,6 +6,7 @@ let registerSchema = new Schema({
     userJoinedStaff: Date,
     userRobux: { type: Number, default: '0' },
     userNotes: { type: Array, default: [] },
+    userStatus: String,
 });
 
 module.exports = model("Staff Database", registerSchema);

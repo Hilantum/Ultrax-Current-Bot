@@ -11,8 +11,8 @@ module.exports = {
         if (interaction.isChatInputCommand()) {
             const command = client.commands.get(commandName);
 
-            if (command.PermissionGroup === 'Moderation') {
-                if (!member.roles.cache.has("1100622738755964959") && !member.roles.cache.has("968897239642677318")) {
+            if (command.PermissionGroup === 'Staff') {
+                if (!member.roles.cache.has("1077753584470458418")) {
                     return interaction.reply({ embeds: [insufficientPermissions] })
                 }
             }

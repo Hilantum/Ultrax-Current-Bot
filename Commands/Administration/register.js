@@ -49,6 +49,7 @@ module.exports = {
                 userId: member.user.id,
                 userDepartment: department,
                 userJoinedStaff: Date.now(),
+                userStatus: 'Probation',
             })
 
             await member.roles.add(marketingRoleTable)
