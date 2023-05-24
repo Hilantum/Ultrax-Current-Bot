@@ -1,8 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { banLog, banMessage, banSuccess } = require('../../Utility/embedFormats.js');
+const { insufficientPermissions, banLog, banMessage, banSuccess } = require('../../Utility/embedFormats.js');
 
 module.exports = {
-    PermissionGroup: 'Moderation',
+    PermissionGroup: 'Administration',
     Data: new SlashCommandBuilder()
         .setName('ban')
         .setDescription('Ban a member from the Discord Server')
@@ -20,27 +20,28 @@ module.exports = {
     async execute(interaction) {
         const { options } = interaction;
 
-        const perpetrator = interaction.guild.members.fetch(options.user.id)
-        const member = interaction.guild.members.fetch(options.getUser('member').id)
+        const perpetrator = await interaction.guild.members.fetch(interaction.user.id)
+        const member = await interaction.guild.members.fetch(options.getUser('member').id)
         const reason = options.getString('reason');
 
-        const modLogs = interaction.guild.channels.cache.get('1060352830420029591');
+        const modLogs = await interaction.guild.channels.cache.get('1100624407350755368');
 
-        if (perpetrator.roles.highest.position >= member.roles.highest.position) {
+        if (perpetrator.roles.highest.position <= member.roles.highest.position) {
             return interaction.reply({ embeds: [insufficientPermissions] })
         }
 
         member.send({ embeds: [banMessage] });
 
-        await member.kick({ reason: `Perpetrator: ${perpetrator.user.tag}` }).then(() => {
-            banSuccess.addFields(
+        await member.ban({ reason: `Perpetrator: ${perpetrator.user.tag}` }).then(() => {
+
+            banSuccess.setFields(
                 { name: 'Offender', value: `${member}`, inline: true },
                 { name: 'Offender ID', value: `${member.user.id}`, inline: true },
                 { name: 'Reason', value: `${reason}`, inline: true },
                 { name: ' ', value: '‎' }
             )
 
-            banLog.addFields(
+            banLog.setFields(
                 { name: 'Offender', value: `${member}`, inline: true },
                 { name: 'Offender ID', value: `${member.user.id}`, inline: true },
                 { name: 'Reason', value: `${reason}`, inline: true },

@@ -12,13 +12,13 @@ module.exports = {
             const command = client.commands.get(commandName);
 
             if (command.PermissionGroup === 'Staff') {
-                if (!member.roles.cache.has("1077753584470458418")) {
+                if (!member.roles.cache.has("1077753584470458418") && !member.roles.cache.has('1077756760779128893')) {
                     return interaction.reply({ embeds: [insufficientPermissions] })
                 }
             }
 
             if (command.PermissionGroup === 'Administration') {
-                if (!member.roles.cache.has("1077756760779128893")) {
+                if (member.roles.cache.has('1077756760779128893') == false) {
                     return interaction.reply({ embeds: [insufficientPermissions] })
                 }
             }

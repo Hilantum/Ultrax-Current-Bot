@@ -13,6 +13,8 @@
     "chalk": "^4.1.2",
     "discord.js": "^14.11.0",
     "dotenv": "^16.0.3",
-    "mongoose": "^7.1.1"
+    "mongoose": "^7.1.1",
+    "noblox": "^4.8.5",
+    "noblox.js": "^4.14.1"
   }
 }

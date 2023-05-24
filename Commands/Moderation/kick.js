@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { insufficientPermissions, kickLog, kickMessage, kickSuccess } = require('../../Utility/embedFormats.js');
 
 module.exports = {
-    PermissionGroup: 'Moderation',
+    PermissionGroup: 'Administration',
     Data: new SlashCommandBuilder()
         .setName('kick')
         .setDescription('Kick a member from the Discord Server')
@@ -20,26 +20,26 @@ module.exports = {
     async execute(interaction) {
         const { options } = interaction;
 
-        const perpetrator = interaction.guild.members.fetch(options.user.id)
-        const member = interaction.guild.members.fetch(options.getUser('member').id)
+        const perpetrator = await interaction.guild.members.fetch(interaction.user.id)
+        const member = await interaction.guild.members.fetch(options.getUser('member').id)
         const reason = options.getString('reason');
 
-        const modLogs = interaction.guild.channels.cache.get('1060352830420029591');
+        const modLogs = await interaction.guild.channels.cache.get('1100624407350755368');
 
-        if (perpetrator.roles.highest.position >= member.roles.highest.position) {
+        if (perpetrator.roles.highest.position <= member.roles.highest.position) {
             return interaction.reply({ embeds: [insufficientPermissions] })
         }
 
         member.send({ embeds: [kickMessage] })
         await member.kick({ reason: `Perpetrator: ${perpetrator.user.tag}` }).then(() => {
-            kickSuccess.addFields(
+            kickSuccess.setFields(
                 { name: 'Offender', value: `${member}`, inline: true },
                 { name: 'Offender ID', value: `${member.user.id}`, inline: true },
                 { name: 'Reason', value: `${reason}`, inline: true },
                 { name: ' ', value: '‎' }
             )
 
-            kickLog.addFields(
+            kickLog.setFields(
                 { name: 'Offender', value: `${member}`, inline: true },
                 { name: 'Offender ID', value: `${member.user.id}`, inline: true },
                 { name: 'Reason', value: `${reason}`, inline: true },
@@ -48,8 +48,9 @@ module.exports = {
             )
             modLogs.send({ embeds: [kickLog] })
             return interaction.reply({ embeds: [kickSuccess] })
+        }).catch(() => {
+            interaction.reply({ content: 'err', ephemeral: true })
         })
 
-        interaction.reply({ content: 'err', ephemeral: true });
     }
 }

@@ -19,7 +19,8 @@ module.exports = {
             .setRequired(true)
             .addChoices(
                 { name: 'Marketing Department', value: 'marketing' },
-                { name: 'Support Department', value: 'support' }
+                { name: 'Support Department', value: 'support' },
+                { name: 'Management Department', value: 'management' }
             )
         ),
 
@@ -49,13 +50,14 @@ module.exports = {
                 userId: member.user.id,
                 userDepartment: department,
                 userJoinedStaff: Date.now(),
-                userStatus: 'Probation',
+                userStatus: "Probation",
             })
 
             await member.roles.add(marketingRoleTable)
             await member.setNickname(`MT | ${member.user.username}`)
+            const newRegisterrSuccess = registerSuccess
 
-            registerSuccess.addFields(
+            newRegisterrSuccess.setFields(
                 { name: 'Staff Member', value: `${member.user}`, inline: true },
                 { name: 'Staff Member ID', value: member.user.id, inline: true },
                 { name: 'Department', value: `Marketing Department`, inline: true },
@@ -72,16 +74,39 @@ module.exports = {
                 userId: member.user.id,
                 userDepartment: department,
                 userJoinedStaff: Date.now(),
+                userStatus: 'Probation',
             })
 
             await member.roles.add(supportRoleTable)
             await member.setNickname(`ST | ${member.user.username}`)
-            department.charAt(0).toUpperCase()
+            const newRegisterrSuccess = registerSuccess
 
-            registerSuccess.addFields(
-                { name: 'Staff Member', value: member.user, inline: true },
+            newRegisterrSuccess.setFields(
+                { name: 'Staff Member', value: `${member.user}`, inline: true },
                 { name: 'Staff Member ID', value: member.user.id, inline: true },
                 { name: 'Department', value: 'Support Department', inline: true },
+                { name: ' ', value: '‎' }
+            )
+
+            return interaction.reply({ embeds: [newRegisterrSuccess] })
+        } else if (department == 'management') {
+            if (await registerModel.findOne({ userId: member.user.id })) {
+                return interaction.reply({ embeds: [registerFailed] })
+            }
+
+            await registerModel.create({
+                userId: member.user.id,
+                userDepartment: department,
+                userJoinedStaff: Date.now(),
+                userStatus: 'Normal',
+            })
+
+            await member.roles.add(supportRoleTable)
+            await member.setNickname(`MA | ${member.user.username}`)
+            registerSuccess.setFields(
+                { name: 'Staff Member', value: `${member.user}`, inline: true },
+                { name: 'Staff Member ID', value: member.user.id, inline: true },
+                { name: 'Department', value: 'Management Department', inline: true },
                 { name: ' ', value: '‎' }
             )
 
@@ -93,4 +118,4 @@ module.exports = {
 
         await interaction.reply({ content: 'err', ephemeral: true });
     }
-}
+} 

@@ -31,8 +31,9 @@ module.exports = {
                 const iso = new Date(collection.userJoinedStaff).getTime()
 
                 let upperString = collection.userDepartment.charAt(0).toUpperCase() + collection.userDepartment.slice(1)
+                const newStaffProfileSuccess = staffProfileSuccess
 
-                staffProfileSuccess.addFields(
+                newStaffProfileSuccess.setFields(
                     { name: 'Staff Member', value: `${member.user}`, inline: true },
                     { name: 'Staff Member ID', value: member.user.id, inline: true },
                     { name: 'Staff Hire Date', value: `<t:${Math.trunc(iso / 1000)}:R>`, inline: true },
@@ -43,7 +44,7 @@ module.exports = {
                     { name: ' ', value: '‎' },
                 )
 
-                return interaction.reply({ embeds: [staffProfileSuccess] })
+                return interaction.reply({ embeds: [newStaffProfileSuccess] })
             } else {
                 return interaction.reply({ content: 'Failed to find staff member', ephemeral: true })
             }
