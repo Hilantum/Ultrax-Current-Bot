@@ -30,8 +30,9 @@ module.exports = {
                 return console.log('Caught a blank string')
             }
             const userId = await noblox.getIdFromUsername(seperatedArray[user]).catch(error => {
-                return userId
+                return console.log('Error')
             })
+            
             if (userId) {
                 const rank = await noblox.getRankInGroup(3054949, userId)
                 if (rank < 15) {

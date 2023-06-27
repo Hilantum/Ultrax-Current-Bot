@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const mongoose = require('mongoose');
-const RegisterModel = require('../../Models/RegisterModel.js');
+const RegisterModel = require('../../Utility/Models/RegisterModel.js');
 const { staffProfileSuccess } = require('../../Utility/embedFormats.js');
 const register = require('../Administration/register.js');
 

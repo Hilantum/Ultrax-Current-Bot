@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 const { registerFailed, registerSuccess } = require('../../Utility/embedFormats');
-const registerModel = require('../../Models/RegisterModel.js')
+const registerModel = require('../../Utility/Models/RegisterModel.js')
 
 module.exports = {
     PermissionGroup: 'Administration',
@@ -110,7 +110,7 @@ module.exports = {
                 { name: ' ', value: '‎' }
             )
 
-            return interaction.reply({ embeds: [registerSuccess] })
+            return await interaction.reply({ embeds: [registerSuccess] })
         }
 
         await member.roles.add(marketingRoleTable);

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const mongoose = require('mongoose');
-const RegisterSchema = require('../../Models/RegisterModel.js');
+const RegisterSchema = require('../../Utility/Models/RegisterModel.js');
 
 module.exports = {
     PermissionGroup: 'Administration',
