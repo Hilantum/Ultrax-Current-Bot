@@ -12,7 +12,7 @@ module.exports = {
         .addUserOption(option => option
             .setName('member')
             .setDescription('Member you\'d like to whitelist')
-            .setRequired(true)               
+            .setRequired(true)
         )
         .addStringOption(option => option
             .setName('product')
@@ -20,29 +20,36 @@ module.exports = {
             .setRequired(true)
             .setChoices(
                 { name: 'F22 Raptor', value: '0' },
-                { name: 'F16C Falcon', value: '2' }
+                { name: 'F16C Falcon', value: '1' },
+                { name: 'F14 Tomcat', value: '2' },
+                { name: 'F35A Lightning', value: '3' },
+                { name: 'F35B Lightning', value: '4' },
+                { name: 'F35C Lightning', value: '5' },
+                { name: 'F15C Eagle', value: '6' },
             )
         ),
-    
-    async execute (interaction) {
+
+    async execute(interaction) {
         const { options, user } = interaction;
         await interaction.deferReply({ ephemeral: true });
 
         const member = await options.getUser('member');
         const product = await options.getString('product');
 
-        const productCollection = await ProductModel.findOne({ productId: product }).then(res => {
-            return res
-        })
-        const collection = await HubRegisterModel.findOne({ discordId: member.id }).then(res => {
-            return res
-        })
-        
+        if (!await HubRegisterModel.findOne({ discordId: member.id })) {
+            return await interaction.editReply({ content: 'User is not linked', ephemeral: true });
+        }
+
+        const productCollection = await ProductModel.findOne({ productId: product }).then(res => { return res })
+        const collection = await HubRegisterModel.findOne({ discordId: member.id }).then(res => { return res })
+
         if (collection.userStatus === "Flagged" || collection.userStatus === "Terminated") {
             return await interaction.editReply({ content: 'This account is currently flagged.', ephemeral: true })
-        } else if (collection.userProducts) {
+        }
+
+        if (collection.userProducts) {
             for (const item of collection.userProducts) {
-                if (item.productId === 0) {
+                if (item.productId === productCollection.productId) {
                     return await interaction.editReply({ content: 'User already has product', ephemeral: true })
                 }
             }
