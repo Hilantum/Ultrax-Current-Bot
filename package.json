@@ -16,6 +16,7 @@
     "dotenv": "^16.0.3",
     "mongoose": "^7.3.0",
     "noblox": "^4.8.5",
-    "noblox.js": "^4.14.1"
+    "noblox.js": "^4.14.1",
+    "nodemon": "^3.1.7"
   }
 }
